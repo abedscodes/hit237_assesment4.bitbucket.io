@@ -1,0 +1,22 @@
+{% extends "proj_app/site_base.html" %}
+
+{% block page_title %}
+  Customer Details
+{% endblock %}
+
+{% block page_heading %}
+  <h1>Customer Details</h1>
+{% endblock %}
+
+{% block main_body %}
+<section>  
+  <p>
+    <ul>
+      {% for admin in admin_list %}
+        <li>{{ admin.name|upper }} (s{{admin.id}})</li>
+      {% endfor %}
+    </ul>
+  </p>
+</section>
+
+{% endblock %}
