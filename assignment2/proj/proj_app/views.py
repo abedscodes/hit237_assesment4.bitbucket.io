@@ -8,6 +8,11 @@ def about(request):
     }
     return render(request, 'proj_app/about.html', context)
 
+def home(request):
+    context = {}  # Optionally add context data if needed
+    return render(request, 'proj_app/home.html', context)
+
+
 def create_admins():
     the_list=[]
 
