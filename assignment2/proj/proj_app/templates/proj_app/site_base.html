@@ -11,12 +11,21 @@
   </title>
 </head>
 <body>
+  <nav>
+    <img src="{% static 'proj_app/images/logo.png' %}" alt="Logo">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Project Details</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
   <div>
     {% block page_heading %}<h1>ERROR: No Heading Supplied</h1>{% endblock %}
 
     {% block main_body %}{% endblock %}
     <footer>
-      <p>© 2018 Charles Darwin University  --  Site for educational use only!</p>
+      <p>© Group 23 - HIT237</p>
     </footer>
   </div>
 </body>
