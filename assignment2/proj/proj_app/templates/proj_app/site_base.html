@@ -12,10 +12,10 @@
 </head>
 <body>
   <nav>
-    <img src="{% static 'proj_app/images/logo.png' %}" alt="Logo">
+    <a href="{% url 'home' %}"><img src="{% static 'proj_app/images/logo.png' %}" alt="Logo"></a>
     <ul>
       <li><a href="{% url 'home' %}">Home</a></li>
-      <li><a href="#">Project Details</a></li>
+      <li><a href="{% url 'proj-list' %}">Project List</a></li>
       <li><a href="{% url 'about' %}">About</a></li>
     </ul>
   </nav>

@@ -59,7 +59,8 @@ nav {
   nav a {
     text-decoration: none; /* Remove underline from links */
     color: #fff; /* Set the color of the link text */
-    font-size: medium;
+    font-size: 20px;
+    font-family:'Times New Roman', Times, serif;
   }
   
   nav a:hover {
@@ -81,12 +82,14 @@ h2 {
 }
 
 footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
     width: 100%;
-    /* margin: 10px; */
+    height: 50px;
     background-color: #1c0e44;
     color: #fff;
+    display: flex; /* Use flexbox */
+    align-items: center; /* Center vertically */
 }
 
 footer p{
@@ -101,4 +104,24 @@ ul {
 
 li {
     margin-bottom: 10px;
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
 }
