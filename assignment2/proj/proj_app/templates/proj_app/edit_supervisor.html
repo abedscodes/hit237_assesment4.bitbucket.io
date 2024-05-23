@@ -2,19 +2,20 @@
 
 
 {% block page_title %}
-  Add Supervisor
+  Edit Supervisor
 {% endblock %}
 
 {% block page_heading %}
-  <h1>Add Supervisor</h1>
+  <h1>Edit Supervisor</h1>
 {% endblock %}
 
 {% block main_body %}
-    <form action="/add/supervisor/done/" method="post">
+    <form action="#" method="post" novalidate>
       {% csrf_token %}
       <table>
         {{ myform.as_table }}
       </table>
-      <input type="submit" value="Add Supervisor">
+      <input type="submit" name="edit" value="Edit Publisher">
+      <input type="submit" name="delete" value="Delete Publisher">
     </form>
 {% endblock %}

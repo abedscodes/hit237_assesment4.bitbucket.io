@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -10,7 +9,7 @@ class Supervisor(models.Model):
     email = models.EmailField()
 
     def __str__(self):
-        return self.name
+        return str(self.staffID) + " : " + self.name
 
 class Group(models.Model):
     groupID = models.CharField(max_length=6, primary_key=True)
