@@ -44,7 +44,7 @@ def save_new_supervisor(form):
     new_sup_object = form.save()
 
 def modify_supervisor(request, key=1):
-    sup = Supervisor.objects.get(staffID=int(key))
+    sup = Supervisor.objects.get(staffID=key)
 
     page_data = None
 

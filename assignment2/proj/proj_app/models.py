@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Supervisor(models.Model):
-    staffID = models.CharField(max_length=6, primary_key=True)
+    staffID = models.CharField(max_length=7, primary_key=True)
     name = models.CharField(max_length=100)
     email = models.EmailField()
 
@@ -22,7 +22,7 @@ class Group(models.Model):
          
 
 class Topic(models.Model):
-    topicID = models.CharField(max_length=3, primary_key=True)
+    topicID = models.CharField(max_length=4, primary_key=True)
     title = models.CharField(max_length=200)
     supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
     groups = models.ManyToManyField(Group, related_name='theses')
