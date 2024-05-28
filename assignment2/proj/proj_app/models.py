@@ -12,9 +12,22 @@ class Supervisor(models.Model):
 
 class Topic(models.Model):
     topicID = models.CharField(max_length=4, primary_key=True)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=90)
     description = models.CharField()
+    category = models.CharField(max_length= 80)
     supervisor = models.ForeignKey(Supervisor, on_delete=models.SET_NULL, null=True)
+    cas = models.BooleanField(default= False)
+    syd = models.BooleanField(default= False)
+    external = models.BooleanField(default= False)
+    chem_eng = models.BooleanField(default= False)
+    cns_eng = models.BooleanField(default= False)
+    eee = models.BooleanField(default= False)
+    mech_eng = models.BooleanField(default= False)
+    cs = models.BooleanField(default= False)
+    cyb_sec = models.BooleanField(default= False)
+    data_sc = models.BooleanField(default= False)
+    is_ds = models.BooleanField(default= False)
+    seng = models.BooleanField(default= False)
     is_approved = models.BooleanField(default=False)
 
     def __str__(self):
