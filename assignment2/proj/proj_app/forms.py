@@ -8,20 +8,26 @@ class SupervisorForm(forms.ModelForm) :
         labels ={ 
             'staffID': 'Staff ID'
         }
+class TopicForm(forms.ModelForm):
+    class Meta:
+        model = Topic
+        fields = ['topicID', 'title', 'description', 'supervisor']
 
 class GroupForm(forms.ModelForm) :
     class Meta:
         model = Supervisor
         fields = ['name', 'groupID', 'email']
         labels ={ 
-            'staffID': 'Staff ID'
+            'groupID': 'Group ID'
         }
 
 
-class StudentForm(forms.ModelForm) :
+class ApplicationForm(forms.ModelForm) :
     class Meta:
-        model = Supervisor
-        fields = ['name', 'staffID', 'email']
+        model = Application
+        fields =['groupID', 'topicID']
         labels ={ 
-            'staffID': 'Staff ID'
+            'groupID': 'Group ID',
+            'topicID': 'Topic Number'
+
         }
