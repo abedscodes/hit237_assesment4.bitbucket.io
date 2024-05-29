@@ -1,6 +1,7 @@
+from sre_constants import GROUPREF
 from django.shortcuts import render,get_object_or_404, redirect
 from proj_app.models import *
-from proj_app.forms import ApplicationForm, SupervisorForm, GroupForm, Application, Topic, TopicForm
+from proj_app.forms import ApplicationForm, SupervisorForm, GroupForm, TopicForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -44,7 +45,7 @@ def save_new_supervisor(form):
     new_sup_object = form.save()
 
 def modify_supervisor(request, key=1):
-    sup = Supervisor.objects.get(staffID=key)
+    sup = Supervisor.objects.get(staffID=int(key))
 
     page_data = None
 
@@ -84,82 +85,186 @@ def delete_supervisor(sup):
     return None
 
 # Views for Groups
-def group_create(request):
-    if request.method == 'POST':
+def add_group(request):
+    page_data = {'myform':GroupForm(), }
+
+    return render(request, app_name + 'add_group.html', page_data)
+
+def add_group_submit(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect('add_group')
+    else:
+        page_data = {}
         form = GroupForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('group_list')
-    else:
-        form = GroupForm()
-    return render(request, 'add_group.html', {'myform': form})
+            save_new_group(form)
+            return HttpResponseRedirect(reverse('homepage'))
+        else:
+            page_data = {'val_errors': form.errors, }
 
-def group_update(request, pk):
-    group = get_object_or_404(Group, pk=pk)
+    return render(request, app_name + 'home.html', page_data)
+
+def modify_group(request, key):
+    grp = Group.objects.get(groupID=int(key))
+
+    page_data = None
+
     if request.method == 'POST':
-        form = GroupForm(request.POST, instance=group)
         if 'edit' in request.POST:
-            if form.is_valid():
-                form.save()
-                return redirect('group_list')
+            print("edit")
+            print(key)
+            form = GroupForm(request.POST, instance=grp)
+            page_data = edit_group(form)
         elif 'delete' in request.POST:
-            group.delete()
-            return redirect('group_list')
+            page_data = delete_group(grp)
+        return HttpResponseRedirect(reverse('homepage'))
     else:
-        form = GroupForm(instance=group)
-    return render(request, 'edit_group.html', {'myform': form})
+
+        form = GroupForm(instance=grp)
+        page_data = {'myform': form,}
+
+    return render(request, app_name + 'edit_group.html', page_data)
+
+def edit_group(form):
+    page_data = {}
+
+    if form.is_valid() != True:
+
+        page_data = {'myform': form, }
+    else:
+
+        form.save()
+
+    return page_data
+
+
+def delete_group(grp):
+    grp.delete()
+    return None
+
+def save_new_group(form):
+    new_grp_object = form.save()
+
 
 # Views for Topics
-def topic_create(request):
-    if request.method == 'POST':
+def add_topic(request):
+    page_data = {'myform':TopicForm(), }
+
+    return render(request, app_name + 'add_topic.html', page_data)
+
+def add_topic_submit(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect('add_topic')
+    else:
+        page_data = {}
         form = TopicForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('topic_list')
-    else:
-        form = TopicForm()
-    return render(request, 'add_topic.html', {'myform': form})
+            save_new_topic(form)
+            return HttpResponseRedirect(reverse('homepage'))
+        else:
+            page_data = {'val_errors': form.errors, }
 
-def topic_update(request, pk):
-    topic = get_object_or_404(Topic, pk=pk)
+    return render(request, app_name + 'home.html', page_data)
+
+def modify_topic(request, key):
+    topic = Topic.objects.get(topicID=int(key))
+
+    page_data = None
+
     if request.method == 'POST':
-        form = TopicForm(request.POST, instance=topic)
         if 'edit' in request.POST:
-            if form.is_valid():
-                form.save()
-                return redirect('topic_list')
+            print("edit")
+            print(key)
+            form = TopicForm(request.POST, instance=topic)
+            page_data = edit_topic(form)
         elif 'delete' in request.POST:
-            topic.delete()
-            return redirect('topic_list')
+            page_data = delete_topic(topic)
+        return HttpResponseRedirect(reverse('homepage'))
     else:
         form = TopicForm(instance=topic)
-    return render(request, 'edit_topic.html', {'myform': form})
+        page_data = {'myform': form,}
+
+    return render(request, app_name + 'edit_topic.html', page_data)
+
+def edit_topic(form):
+    page_data = {}
+
+    if form.is_valid() != True:
+        page_data = {'myform': form, }
+    else:
+        form.save()
+
+    return page_data
+
+
+def delete_topic(topic):
+    topic.delete()
+    return None
+
+def save_new_topic(form):
+    new_topic_object = form.save()
+
+
+
 
 # Views for Applications
-def application_create(request):
-    if request.method == 'POST':
+def add_application(request):
+    page_data = {'myform':ApplicationForm(), }
+
+    return render(request, app_name + 'add_application.html', page_data)
+
+def add_application_submit(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect('add_application')
+    else:
+        page_data = {}
         form = ApplicationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('application_list')
-    else:
-        form = ApplicationForm()
-    return render(request, 'add_application.html', {'myform': form})
+            save_new_application(form)
+            return HttpResponseRedirect(reverse('homepage'))
+        else:
+            page_data = {'val_errors': form.errors, }
 
-def application_update(request, pk):
-    application = get_object_or_404(Application, pk=pk)
+    return render(request, app_name + 'home.html', page_data)
+
+def modify_application(request, key):
+    app = Application.objects.get(id=int(key))
+
+    page_data = None
+
     if request.method == 'POST':
-        form = ApplicationForm(request.POST, instance=application)
         if 'edit' in request.POST:
-            if form.is_valid():
-                form.save()
-                return redirect('application_list')
+            print("edit")
+            print(key)
+            form = ApplicationForm(request.POST, instance=app)
+            page_data = edit_application(form)
         elif 'delete' in request.POST:
-            application.delete()
-            return redirect('application_list')
+            page_data = delete_application(app)
+        return HttpResponseRedirect(reverse('homepage'))
     else:
-        form = ApplicationForm(instance=application)
-    return render(request, 'edit_application.html', {'myform': form})
+        form = ApplicationForm(instance=app)
+        page_data = {'myform': form,}
+
+    return render(request, app_name + 'edit_application.html', page_data)
+
+def edit_application(form):
+    page_data = {}
+
+    if form.is_valid() != True:
+        page_data = {'myform': form, }
+    else:
+        form.save()
+
+    return page_data
+
+
+def delete_application(app):
+    app.delete()
+    return None
+
+def save_new_application(form):
+    new_application_object = form.save()
+
 
 # def delete_supervisor(request, key):
 #     sup = Supervisor.objects.get(id=int(key))

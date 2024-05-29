@@ -15,27 +15,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from proj_app import views
 
 urlpatterns = [    
     path('admin/', admin.site.urls),
     path('', views.home, name='homepage'),
-    path('add/supervisor/', views.add_supervisor),
+
+    path('add/supervisor/', views.add_supervisor, name='add supervisor'),
     path('add/supervisor/done/', views.add_supervisor_submit),
     re_path(r'^edit/supervisor/(?P<key>\w+)?/?$', views.modify_supervisor),
     re_path(r'^delete/supervisor/(?P<key>\w+)?/?$', views.modify_supervisor),
 
-    path('groups/new/', views.group_create, name='group_create'),
-    path('groups/<int:pk>/edit/', views.group_update, name='group_update'),
-    path('topics/new/', views.topic_create, name='topic_create'),
-    path('topics/<int:pk>/edit/', views.topic_update, name='topic_update'),
-    path('applications/new/', views.application_create, name='application_create'),
-    path('applications/<int:pk>/edit/', views.application_update, name='application_update'),
+    path('group/new/', views.add_group, name='group_create'),
+    path('add/group/done/', views.add_group_submit),
+    re_path(r'^edit/group/(?P<key>\w+)?/?$', views.modify_group),
+    re_path(r'^delete/group/(?P<key>\w+)?/?$', views.modify_group),    
 
-    # path('about/', views.about, name='about'),
-    # path('project-list/', views.proj_list, name='proj-list'),
-    # path('project/<int:topic_id>/', views.project_details, name='project_details'),
+    path('topic/new/', views.add_topic, name='topic_create'),
+    path('add/topic/done/', views.add_topic_submit),
+    re_path(r'^edit/topic/(?P<key>\w+)?/?$', views.modify_topic),
+    re_path(r'^delete/topic/(?P<key>\w+)?/?$', views.modify_topic),
 
-    
+    path('application/new/', views.add_application, name='application_create'),
+    path('add/application/done/', views.add_application_submit),
+    re_path(r'^edit/application/(?P<key>\w+)?/?$', views.modify_application),
+    re_path(r'^delete/application/(?P<key>\w+)?/?$', views.modify_application),
 ]

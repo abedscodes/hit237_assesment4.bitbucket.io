@@ -1,5 +1,7 @@
 from django import forms
 from .models import *
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 
 class SupervisorForm(forms.ModelForm) :
     class Meta:
@@ -30,7 +32,7 @@ class TopicForm(forms.ModelForm):
             'seng': 'Software Engineering',
         }
 
-class GroupForm(forms.ModelForm) :
+class GroupForm(UserCreationForm) :
     class Meta:
         model = Group
         fields = ['name', 'groupID', 'email']

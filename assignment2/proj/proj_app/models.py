@@ -35,14 +35,14 @@ class Topic(models.Model):
         return self.title
 
     def remove_if_no_groups(self):
-        if not self.group_set.exists():
+        if not self.group_set.exists(): #type: ignore
             self.delete()
 
 class Group(models.Model):
     groupID = models.CharField(max_length=6, primary_key=True)
     name = models.CharField(max_length=100)
-    supervisors = models.ManyToManyField(Supervisor)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    supervisors = models.ForeignKey(Supervisor, on_delete=models.DO_NOTHING)
+    topic = models.ForeignKey(Topic, on_delete=models.DO_NOTHING)
     is_approved = models.BooleanField(default=False)  # Field to track if the group's thesis project is approved
     email = models.EmailField()
 
@@ -52,6 +52,7 @@ class Group(models.Model):
 class Application(models.Model):
     groupID = models.ForeignKey(Group, on_delete=models.CASCADE)
     topicID = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=[('Pending', 'Pending'), ('Approved', 'Approved'), ('Rejected', 'Rejected')], default='Pending')
 
     def __str__(self):
         return str(self.id) + " : " + str(self.groupID) + " applied for topic number " + str(self.topicID) # type: ignore
