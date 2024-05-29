@@ -26,6 +26,13 @@ urlpatterns = [
     re_path(r'^edit/supervisor/(?P<key>\w+)?/?$', views.modify_supervisor),
     re_path(r'^delete/supervisor/(?P<key>\w+)?/?$', views.modify_supervisor),
 
+    path('groups/new/', views.group_create, name='group_create'),
+    path('groups/<int:pk>/edit/', views.group_update, name='group_update'),
+    path('topics/new/', views.topic_create, name='topic_create'),
+    path('topics/<int:pk>/edit/', views.topic_update, name='topic_update'),
+    path('applications/new/', views.application_create, name='application_create'),
+    path('applications/<int:pk>/edit/', views.application_update, name='application_update'),
+
     # path('about/', views.about, name='about'),
     # path('project-list/', views.proj_list, name='proj-list'),
     # path('project/<int:topic_id>/', views.project_details, name='project_details'),

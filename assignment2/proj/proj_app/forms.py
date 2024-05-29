@@ -8,10 +8,11 @@ class SupervisorForm(forms.ModelForm) :
         labels ={ 
             'staffID': 'Staff ID'
         }
+
 class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic
-        fields = ['topicID', 'title', 'description', 'category', 'supervisor', 'cas','syd', 'ext',
+        fields = ['topicID', 'title', 'description', 'category', 'supervisor', 'cas','syd', 'external',
                   'chem_eng', 'cns_eng', 'eee', 'mech_eng', 'cs', 'cyb_sec',
                   'data_sc', 'is_ds', 'seng']
         labels = {
@@ -31,7 +32,7 @@ class TopicForm(forms.ModelForm):
 
 class GroupForm(forms.ModelForm) :
     class Meta:
-        model = Supervisor
+        model = Group
         fields = ['name', 'groupID', 'email']
         labels ={ 
             'groupID': 'Group ID'

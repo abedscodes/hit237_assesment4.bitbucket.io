@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404, redirect
 from proj_app.models import *
-from proj_app.forms import SupervisorForm
+from proj_app.forms import ApplicationForm, SupervisorForm, GroupForm, Application, Topic, TopicForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -82,6 +82,84 @@ def edit_supervisor(form):
 def delete_supervisor(sup):
     sup.delete()
     return None
+
+# Views for Groups
+def group_create(request):
+    if request.method == 'POST':
+        form = GroupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('group_list')
+    else:
+        form = GroupForm()
+    return render(request, 'add_group.html', {'myform': form})
+
+def group_update(request, pk):
+    group = get_object_or_404(Group, pk=pk)
+    if request.method == 'POST':
+        form = GroupForm(request.POST, instance=group)
+        if 'edit' in request.POST:
+            if form.is_valid():
+                form.save()
+                return redirect('group_list')
+        elif 'delete' in request.POST:
+            group.delete()
+            return redirect('group_list')
+    else:
+        form = GroupForm(instance=group)
+    return render(request, 'edit_group.html', {'myform': form})
+
+# Views for Topics
+def topic_create(request):
+    if request.method == 'POST':
+        form = TopicForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('topic_list')
+    else:
+        form = TopicForm()
+    return render(request, 'add_topic.html', {'myform': form})
+
+def topic_update(request, pk):
+    topic = get_object_or_404(Topic, pk=pk)
+    if request.method == 'POST':
+        form = TopicForm(request.POST, instance=topic)
+        if 'edit' in request.POST:
+            if form.is_valid():
+                form.save()
+                return redirect('topic_list')
+        elif 'delete' in request.POST:
+            topic.delete()
+            return redirect('topic_list')
+    else:
+        form = TopicForm(instance=topic)
+    return render(request, 'edit_topic.html', {'myform': form})
+
+# Views for Applications
+def application_create(request):
+    if request.method == 'POST':
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('application_list')
+    else:
+        form = ApplicationForm()
+    return render(request, 'add_application.html', {'myform': form})
+
+def application_update(request, pk):
+    application = get_object_or_404(Application, pk=pk)
+    if request.method == 'POST':
+        form = ApplicationForm(request.POST, instance=application)
+        if 'edit' in request.POST:
+            if form.is_valid():
+                form.save()
+                return redirect('application_list')
+        elif 'delete' in request.POST:
+            application.delete()
+            return redirect('application_list')
+    else:
+        form = ApplicationForm(instance=application)
+    return render(request, 'edit_application.html', {'myform': form})
 
 # def delete_supervisor(request, key):
 #     sup = Supervisor.objects.get(id=int(key))

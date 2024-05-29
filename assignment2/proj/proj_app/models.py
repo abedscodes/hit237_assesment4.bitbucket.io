@@ -13,9 +13,10 @@ class Supervisor(models.Model):
 class Topic(models.Model):
     topicID = models.CharField(max_length=4, primary_key=True)
     title = models.CharField(max_length=90)
-    description = models.CharField()
+    description = models.CharField(max_length=800)
     category = models.CharField(max_length= 80)
     supervisor = models.ForeignKey(Supervisor, on_delete=models.SET_NULL, null=True)
+    group_limit = models.PositiveIntegerField()
     cas = models.BooleanField(default= False)
     syd = models.BooleanField(default= False)
     external = models.BooleanField(default= False)
@@ -49,9 +50,8 @@ class Group(models.Model):
         return self.name
 
 class Application(models.Model):
-
     groupID = models.ForeignKey(Group, on_delete=models.CASCADE)
     topicID = models.ForeignKey(Topic, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.id) + " : " + str(self.groupID) + " applied for topic number " + str(self.topicID)
+        return str(self.id) + " : " + str(self.groupID) + " applied for topic number " + str(self.topicID) # type: ignore
