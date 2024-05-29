@@ -1,13 +1,46 @@
 from django import forms
 from .models import *
 
-class SupervisorForm(forms.ModelForm) :
-    class Meta:
-        model = Supervisor
-        fields = ['name', 'staffID', 'email']
-        labels ={ 
-            'staffID': 'Staff ID'
-        }
+from django.contrib.auth.forms import UserCreationForm
+
+class SupervisorSignUpForm(UserCreationForm):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = UserCreationForm.Meta.fields + ('username',)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.user_type = 'supervisor'
+        if commit:
+            user.save()
+            SupervisorProfile.objects.create(user=user, name=self.cleaned_data['name'], email=self.cleaned_data['email'])
+        return user
+
+class GroupSignUpForm(UserCreationForm):
+    name = forms.CharField(max_length=100)
+
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = ['username', 'email', 'password1', 'password2']
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.user_type = 'group'
+        if commit:
+            user.save()
+            GroupProfile.objects.create(user=user, name=self.cleaned_data['name'], email=self.cleaned_data['email'])
+        return user
+
+# class SupervisorForm(forms.ModelForm) :
+#     class Meta:
+#         model = Supervisor
+#         fields = ['name', 'staffID', 'email']
+#         labels ={ 
+#             'staffID': 'Staff ID'
+#         }
 
 class TopicForm(forms.ModelForm):
     class Meta:
@@ -30,13 +63,13 @@ class TopicForm(forms.ModelForm):
             'seng': 'Software Engineering',
         }
 
-class GroupForm(forms.ModelForm) :
-    class Meta:
-        model = Group
-        fields = ['name', 'groupID', 'email']
-        labels ={ 
-            'groupID': 'Group ID'
-        }
+# class GroupForm(forms.ModelForm) :
+#     class Meta:
+#         model = Group
+#         fields = ['name', 'groupID', 'email']
+#         labels ={ 
+#             'groupID': 'Group ID'
+#         }
 
 
 class ApplicationForm(forms.ModelForm) :

@@ -22,15 +22,20 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='homepage'),
 
-    path('add/supervisor/', views.add_supervisor, name='add supervisor'),
-    path('add/supervisor/done/', views.add_supervisor_submit),
-    re_path(r'^edit/supervisor/(?P<key>\w+)?/?$', views.modify_supervisor),
-    re_path(r'^delete/supervisor/(?P<key>\w+)?/?$', views.modify_supervisor),
+    path('register/supervisor/', views.register_supervisor, name='register_supervisor'),
+    path('register/group/', views.register_group, name='register_group'),
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.user_logout, name='logout'),
 
-    path('group/new/', views.add_group, name='group_create'),
-    path('add/group/done/', views.add_group_submit),
-    re_path(r'^edit/group/(?P<key>\w+)?/?$', views.modify_group),
-    re_path(r'^delete/group/(?P<key>\w+)?/?$', views.modify_group),    
+    # path('add/supervisor/', views.add_supervisor, name='add supervisor'),
+    # path('add/supervisor/done/', views.add_supervisor_submit),
+    # re_path(r'^edit/supervisor/(?P<key>\w+)?/?$', views.modify_supervisor),
+    # re_path(r'^delete/supervisor/(?P<key>\w+)?/?$', views.modify_supervisor),
+
+    # path('group/new/', views.add_group, name='group_create'),
+    # path('add/group/done/', views.add_group_submit),
+    # re_path(r'^edit/group/(?P<key>\w+)?/?$', views.modify_group),
+    # re_path(r'^delete/group/(?P<key>\w+)?/?$', views.modify_group),    
 
     path('topic/new/', views.add_topic, name='topic_create'),
     path('add/topic/done/', views.add_topic_submit),
