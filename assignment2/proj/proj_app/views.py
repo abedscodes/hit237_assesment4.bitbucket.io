@@ -1,7 +1,9 @@
 from sre_constants import GROUPREF
 from django.shortcuts import render,get_object_or_404, redirect
 from proj_app.models import *
-from proj_app.forms import ApplicationForm, SupervisorForm, GroupForm, TopicForm
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from proj_app.forms import ApplicationForm, SupervisorForm, GroupForm, Application, Topic, TopicForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
